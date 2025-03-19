@@ -1,6 +1,6 @@
 # Discord MCP Bot
 
-Discord 채널에서 작동하는 MCP(Minecraft Control Protocol) 봇입니다. GPT-4를 활용하여 사용자의 질문에 답변하고 채널의 컨텍스트를 이해합니다.
+Discord 채널에서 작동하는 MCP(Model Context Protocol) 봇입니다. GPT-4를 활용하여 사용자의 질문에 답변하고 채널의 컨텍스트를 이해합니다.
 
 ## 기능
 
@@ -13,8 +13,8 @@ Discord 채널에서 작동하는 MCP(Minecraft Control Protocol) 봇입니다. 
 
 1. 저장소 클론
 ```bash
-git clone [your-repository-url]
-cd [repository-name]
+git clone https://github.com/tlatldms/playground_with_cursor.git
+cd playground_with_cursor
 ```
 
 2. 가상환경 생성 및 활성화

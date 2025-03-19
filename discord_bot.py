@@ -37,13 +37,8 @@ async def load_channel_history(channel):
     messages = []
     total_tokens = 0
     max_tokens = 8000  # TPM 제한을 고려하여 토큰 수 제한
-    message_count = 0
-    max_messages = 300  # 최대 메시지 수 제한
     
     async for msg in channel.history(limit=None):  # 모든 메시지 가져오기
-        if message_count >= max_messages:  # 메시지 수 제한 체크
-            break
-            
         if msg.author != bot.user:  # 봇의 메시지는 제외
             message_text = f"{msg.author.name}: {msg.content}"
             # 대략적인 토큰 수 추정 (영어 기준 1단어 = 1.3토큰)
@@ -53,7 +48,6 @@ async def load_channel_history(channel):
             if total_tokens + estimated_tokens <= max_tokens:
                 messages.append(message_text)
                 total_tokens += estimated_tokens
-                message_count += 1
             else:
                 break
     
@@ -65,15 +59,11 @@ async def update_channel_members(channel):
     """채널의 멤버 정보를 업데이트하는 함수"""
     members = channel.members
     member_info = []
-    member_count = 0
-    
     for member in members:
         if not member.bot:  # 봇 제외
             member_info.append(f"- {member.name} (상태: {member.status})")
-            member_count += 1
-            
     channel_members[channel.id] = member_info
-    print(f"[디버그] 채널 {channel.name}의 멤버 정보 업데이트 완료 (총 멤버 수: {member_count})")
+    print(f"[디버그] 채널 {channel.name}의 멤버 정보 업데이트 완료")
 
 @bot.event
 async def on_ready():
@@ -132,7 +122,7 @@ async def on_message(message):
 현재 채널의 멤버 목록은 다음과 같습니다:
 {chr(10).join(member_info)}
 
-최근 대화 내용은 다음과 같습니다 (최근 300개 메시지, 최신순):
+최근 대화 내용은 다음과 같습니다 (최신순):
 {chr(10).join(message_history)}
 
 사용자의 질문에 명확하고 정확하게 답변해주세요. 멤버에 대한 질문이 있다면 위 목록을 참고하여 답변해주세요.
